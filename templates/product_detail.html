@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://bootswatch.com/5/journal/bootstrap.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .product-image {
+            max-width: 200px; /* Adjust as needed */
+            height: auto; /* Ensures image aspect ratio is maintained */
+            border-radius: 5px; /* Rounded corners */
+        }
+    </style>
+    <title>{{ product.name }}</title>
+</head>
+<body>
+    <p>Category : {{ product.category }}</p>
+    <h1>{{ product.product_name }}</h1>
+    <img src="{{ product.product_image.url }}" alt="{{ product.product_name }}" class="product-image">
+    <p><strong>Description:</strong> {{ product.product_description }}</p>
+    <p><strong>Price:</strong> ${{ product.product_price }}</p>
+    <p><strong>Stock Type:</strong> {{ product.stock_type }}</p>
+    {% if product.can_return %}
+    <p><strong>Returnable</strong></p>
+    {% else %}
+        <p><strong>Not Returnable</strong></p>
+    {% endif %}
+    <a href="{% url 'product_list' %}">Back to Product List</a>
+</body>
+</html>
