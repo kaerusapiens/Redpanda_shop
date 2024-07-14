@@ -41,9 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "store", #追記　#added django app,
-    "cart", #追記
-    'django_bootstrap5', #追記　#third party apps
+    'store', #追記　#added django app,
+    'cart', #追記
 ]
 
 MIDDLEWARE = [
@@ -121,8 +120,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATIC_URL = 'static/'
+
+STATIC_URL = '/static/' #URL absolute / URL relative
 
 STATICFILE_DIRS=[BASE_DIR, 'static'] #add for image static file DIR
 MEDIA_URL = '/media/' #add for image static file DIR

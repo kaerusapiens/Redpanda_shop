@@ -3,15 +3,13 @@ from .models import Product, Category
 
 
 
-def product_list(request):
+def store(request):
     products = Product.objects.all()
-    for product in products:
-        product.estimated_shipping_date = product.get_est_ship_date()
-    return render(request, 'product_list.html', {'products': products})
+    return render(request, 'store.html', {'products': products})
 
 
 
-def product_detail(request, pk):
-    product = get_object_or_404(Product, pk=pk)
+def product_detail(request, slug):
+    product = get_object_or_404(Product, slug=slug)
     return render(request, 'product_detail.html', {'product': product})
 
