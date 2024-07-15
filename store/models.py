@@ -11,7 +11,7 @@ class Category(models.Model):
 
     def get_absolute_url(self):
         return reverse('category_list',args=[self.slug])
-    #Categorys→Categories
+    #Admin panel Categorys→Categories
     class Meta:
         verbose_name_plural = 'categories'
 

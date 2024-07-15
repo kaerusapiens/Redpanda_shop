@@ -1,17 +1,4 @@
-# Redpanda_shop
-
-## Active virtual env & run server
-```
-source Scripts/activate
-cd project
-python manage.py runserver
-```
-
-## Migaration
-```
-python manage.py makemigrations
-python manage.py migrate
-```
+# Redpanda_shop Specification
 
 ## Direcotory structure
 
@@ -20,30 +7,56 @@ rendpanda_shop
 ├── config --> settings.py, urls.py, wsgi.py, asgi.py
 ├── static --> media
 ├── secrets --> yaml
-├── cart --> app
-└── store --> app
+├── templates --> htmls
+├── cart --> cart app
+├── account --> user app
+└── store --> app for products, category
 ```
 
+## Database
 
-### APP - Store
+### Tablelist
+1.  django_admin_log
+2.  django_content_type
+3.  django_migrations
+4.  django_session
+5.  store_category
+6.  store_product
 
-* Install
 
-`python manage.py startapp store`
+### store_category schema
 
-```tree
-store
-├── admin.py - Add models in admin page
-├── apps.py
-├── models.py -make models from DB
-├── tests.py
-├── urls.py
-└── views.py
-```
+| Column Name | Data Type | Constraints |
+|---|---|---|
+| id | INTEGER | PRIMARY KEY, AUTOINCREMENT |
+| category_name | VARCHAR(100) | NOT NULL |
+| slug | VARCHAR(100) | NOT NULL, UNIQUE |
 
-* Image handling
-  - install image handler `pip install pillow`
-  - create directory
+### store_product schema
+
+| Column Name | Data Type | Constraints |
+|---|---|---|
+| id | INTEGER | PRIMARY KEY, AUTOINCREMENT |
+| product_name | VARCHAR(100) | NOT NULL |
+| slug | VARCHAR(100) | NOT NULL, UNIQUE |
+| product_price | DECIMAL | NOT NULL |
+| product_description | TEXT | NOT NULL |
+| product_image | VARCHAR(100) | NOT NULL |
+| can_return | BOOLEAN | NOT NULL |
+| est_ship_date | VARCHAR(10) | NOT NULL |
+| category_id | BIGINT | NOT NULL, FOREIGN KEY REFERENCES store_category(id) |
+
+
+
+
+
+
+## Image handling for products
+
+* install image handler
+  
+   `pip install pillow`
+* create directory
 ```tree
 ├──config -->main configs
 ├──store
@@ -52,48 +65,36 @@ store
 ```
 
 
-### APP - Cart
 
-* Install
+
+
+
+## Active virtual env & run server
+```
+source Scripts/activate
+cd project
+python manage.py runserver
+```
+
+## DB Migaration
+```
+python manage.py makemigrations
+python manage.py migrate
+```
+
+## create app
 
 `python manage.py startapp cart`
 
 
-```tree
-cart
-├── admin.py
-├── apps.py
-├── carts.py --> # manually create for cart session
-├── contex_processors.py #manully create for cart session in settings.py
-├── models.py -make models from DB
-├── tests.py
-├── urls.py
-└── views.py
-```
 
 
-* Session creation
-
+### Notes
+* AJAX, Jquery Session creation
 `python manage.py shell`
-
 ```
 >>>from django.contrib.sessions.models import Session
 >>>session_key = Session.objects.get(pk="")
 >>>session_key.get_decoded() #blank
 >>>exit()
-
-
 ```
-
-
-
-
-
-
-
-* AJAX
-
-
-### Notes
-* カテゴリーボタン
-

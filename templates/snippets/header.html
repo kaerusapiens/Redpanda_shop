@@ -1,6 +1,6 @@
 <div class="p-3 mb-2 bg-dark text-white">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Save Redpanda Shop</a>
+    <a class="navbar-brand"> Save Redpanda Shop </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -19,7 +19,7 @@
           </a>
           <ul class="dropdown-menu">
             {% for category in categories %}
-              <li><a class="dropdown-item" href="{{ category.get_absolute_url }}">{{ category.name }}</a></li>
+              <li><a class="dropdown-item" href="{{ category.get_absolute_url }}">{{ category.name | capfirst }}</a></li> <!--capitalize the word-->
             {% endfor %}
           </ul>
         </li>

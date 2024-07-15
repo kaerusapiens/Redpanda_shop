@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'store', #追記
     'cart', #追記
+    'account', #追記'
 ]
 
 MIDDLEWARE = [
@@ -68,7 +69,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                "cart.context_processors.cart" #追記
+                 "store.views.category_list" #追加。全てのページでこのデータベースが接続できるようになる
             ],
         },
     },

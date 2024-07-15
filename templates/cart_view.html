@@ -11,7 +11,8 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">商品番号</th>
-                        <th scope="col">品名</th>
+                        <th scope="col">商品名</th>
+                        <th scope="col"></th>
                         <th scope="col">単価</th>
                         <th scope="col">個数</th>
                         <th scope="col">計</th>
@@ -23,21 +24,22 @@
                     <tr>
                         <td>No.{{forloop.counter}}</td>
                         <td>{{object.pk}}</td>
+                        <td><img style="width: 5rem;" src="{{ object.product_image.url }}" class="card-img-top product-image" alt="product-image"></td>
                         <td>{{object.product_name}}</td>
-                        <td>{{object.proudct_price}}</td>
+                        <td>{{object.product_price}}</td>
                         <td>{{object.quantity}}</td>
-                        <td>{{object.subtotal}}</td>
+                        <td>¥　{{object.subtotal}}</td>
                         <td><a href="/cart/remove/{{object.pk}}/" class="my-auto btn btn-danger btn-sm">削除</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
-            <p class="lead text-right">合計 - ¥{{object.total}}</p>
+            <p class="lead text-right">合計 - ¥{{total}}</p>
 
             <!-- Checkoutボタン -->
             <form action="/pay/checkout/" method="POST" class="text-right">
             {% csrf_token %}
-                <button type="submit" class="btn btn-info">Checkout</button>
+                <button type="submit" class="btn btn-primary">Checkout</button>
             </form>
             {% else %}
             <p class="">ショッピングカートにアイテムがありません。</p>
