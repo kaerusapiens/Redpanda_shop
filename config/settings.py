@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'store', #追記　#added django app,
+    'store', #追記
     'cart', #追記
 ]
 
@@ -68,6 +68,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                "cart.context_processors.cart" #追記
             ],
         },
     },
@@ -121,11 +122,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = '/static/' #URL absolute / URL relative
+STATIC_URL = '/static/'  #追記URL absolute / URL relative
 
-STATICFILE_DIRS=[BASE_DIR, 'static'] #add for image static file DIR
-MEDIA_URL = '/media/' #add for image static file DIR
-MEDIA_ROOT = BASE_DIR / 'static/media' #add for image static file DIR
+STATICFILE_DIRS=[BASE_DIR, 'static']  #追記add for image static file DIR
+MEDIA_URL = '/media/'  #追記add for image static file DIR
+MEDIA_ROOT = BASE_DIR / 'static/media'  #追記add for image static file DIR
 
 
 

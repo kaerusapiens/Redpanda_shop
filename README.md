@@ -7,6 +7,12 @@ cd project
 python manage.py runserver
 ```
 
+## Migaration
+```
+python manage.py makemigrations
+python manage.py migrate
+```
+
 ## Direcotory structure
 
 ```tree
@@ -48,18 +54,46 @@ store
 
 ### APP - Cart
 
+* Install
 
 `python manage.py startapp cart`
 
 
-# Notes
-* web socket -wsgi asgi
-* url name space - urls.py
-* oop, instanciation
-* Django의 ORM
-* def __init__, __init__= name, 
-* @admin.register(Category)
-* super()
-* gitignore
-* image upload
-* why migration folder not eixst
+```tree
+cart
+├── admin.py
+├── apps.py
+├── carts.py --> # manually create for cart session
+├── contex_processors.py #manully create for cart session in settings.py
+├── models.py -make models from DB
+├── tests.py
+├── urls.py
+└── views.py
+```
+
+
+* Session creation
+
+`python manage.py shell`
+
+```
+>>>from django.contrib.sessions.models import Session
+>>>session_key = Session.objects.get(pk="")
+>>>session_key.get_decoded() #blank
+>>>exit()
+
+
+```
+
+
+
+
+
+
+
+* AJAX
+
+
+### Notes
+* カテゴリーボタン
+

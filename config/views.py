@@ -1,4 +1,6 @@
-from django.views.generic import TemplateView
+from store.models import Product
+from django.shortcuts import render 
 
-class baseview(TemplateView):
-    template_name = 'base.html'
+def index(request):
+    products = Product.objects.all()
+    return render(request, 'index.html', {'products': products})
