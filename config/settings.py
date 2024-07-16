@@ -14,6 +14,7 @@ from pathlib import Path
 import yaml #追記
 
 
+
 BASE_DIR = Path(__file__).resolve().parent.parent #追記
 def read_yaml_config(file_path): #追記
     with open(file_path, 'r') as file:
@@ -136,3 +137,11 @@ MEDIA_ROOT = BASE_DIR / 'static/media'  #追記add for image static file DIR
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#カスタマイズUser model
+AUTH_USER_MODEL = 'account.User' #追記
+
+LOGIN_URL = "/login/" #追記ログインページ   
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_URL = "/logout/" #追記ログアウト
+LOGOUT_REDIRECT_URL = "/"
