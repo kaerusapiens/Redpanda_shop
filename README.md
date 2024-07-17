@@ -14,6 +14,7 @@ rendpanda_shop
 ```
 
 ## Database
+Using sqlite3
 
 ### Tablelist
 1.  django_admin_log
