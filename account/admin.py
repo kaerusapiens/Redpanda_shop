@@ -11,16 +11,20 @@ class ProfileInline(admin.StackedInline):
 
 class UserAdmin(UserAdmin):
     fieldsets = (
-        (None, {'fields': ('userid','email', 'password')}),
-        (None, {'fields': ('is_active','is_admin')}),
+        (None, {'fields': ('userid','email', 'password',)}),
+        (None, {'fields': ('is_admin',)}),
     )
     list_display = (
         'userid',
         'email',
         'is_admin',
     )
+    list_filter = ()
+    ordering = ()
+    filter_horizontal = ()
+
     add_fieldsets = (
-         (None, {'fields': ('userid','email', 'password')}),
+         (None, {'fields': ('userid','email', 'password',)}),
     )
     add_form = UserCreationForm
     inlines = (ProfileInline,)
@@ -28,6 +32,6 @@ class UserAdmin(UserAdmin):
 
 
 
-admin.site.register(User, UserCreationForm)
+admin.site.register(User, UserAdmin)
 admin.site.register(Profile)
 

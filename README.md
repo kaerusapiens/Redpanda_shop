@@ -9,8 +9,8 @@ rendpanda_shop
 ├── secrets --> yaml
 ├── templates --> htmls
 ├── cart --> cart app
-├── account --> user app
-└── store --> app for products, category
+├── account --> user model
+└── store --> product model, category model
 ```
 
 ## Database
@@ -46,6 +46,15 @@ rendpanda_shop
 | est_ship_date | VARCHAR(10) | NOT NULL |
 | category_id | BIGINT | NOT NULL, FOREIGN KEY REFERENCES store_category(id) |
 
+## django_session schema
+
+| Column Name | Data Type | Constraints |
+|---|---|---|
+| session_key | VARCHAR(40) | PRIMARY KEY |
+| session_data | TEXT | NOT NULL |
+| expire_date | DATETIME | NOT NULL |
+
+>session_data : serialized the cart item information
 
 
 

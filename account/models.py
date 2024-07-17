@@ -24,14 +24,13 @@ class User(AbstractBaseUser):
     id = models.BigAutoField(primary_key=True)
     userid = models.CharField(max_length=50, unique=True)
     email = models.EmailField(max_length=255, unique=True)
-    is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
-    objects = UserManager()
+    objects = UserManager() #assign customized create_user, create_superuser
 
     USERNAME_FIELD = 'userid'
     EMAIL_FILED = 'email'
-    REQUIRED_FIELDS = ['email',"userid"]
+    REQUIRED_FIELDS = ['email']
 
     def __str__(self):
         return self.userid
