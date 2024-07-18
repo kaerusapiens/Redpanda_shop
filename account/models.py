@@ -56,8 +56,8 @@ class Profile(models.Model):
         return self.user_name
 
 
-# oneTooneを同時に作成
-#post_save ->実行されるタイミング
+
+#post_save ->[post]が実行されるタイミング
 @receiver(post_save, sender=User)
 def create_user_profile(sender, **kwargs):
     if kwargs['created']:

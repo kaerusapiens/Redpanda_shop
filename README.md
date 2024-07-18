@@ -17,12 +17,9 @@ rendpanda_shop
 Using sqlite3
 
 ### Tablelist
-1.  django_admin_log
-2.  django_content_type
-3.  django_migrations
-4.  django_session
-5.  store_category
-6.  store_product
+1.  django_session
+2.  store_category
+3.  store_product
 
 
 ### store_category schema
@@ -102,9 +99,3 @@ python manage.py migrate
 ### Notes
 * AJAX, Jquery Session creation
 `python manage.py shell`
-```
->>>from django.contrib.sessions.models import Session
->>>session_key = Session.objects.get(pk="")
->>>session_key.get_decoded() #blank
->>>exit()
-```

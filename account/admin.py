@@ -1,17 +1,16 @@
 from django.contrib import admin
-from .forms import UserCreationForm
-from .models import User, Profile
 from django.contrib.auth.admin import UserAdmin
-
+from .models import User, Profile
+from .forms import UserCreationForm
 
 class ProfileInline(admin.StackedInline):
     model = Profile
     can_delete = False
 
-
-class UserAdmin(UserAdmin):
+@admin.register(User)
+class CustomUserAdmin(UserAdmin):
     fieldsets = (
-        (None, {'fields': ('userid','email', 'password',)}),
+        (None, {'fields': ('userid', 'email', 'password',)}),
         (None, {'fields': ('is_admin',)}),
     )
     list_display = (
@@ -24,14 +23,11 @@ class UserAdmin(UserAdmin):
     filter_horizontal = ()
 
     add_fieldsets = (
-         (None, {'fields': ('userid','email', 'password',)}),
+        (None, {'fields': ('userid', 'email', 'password',)}),
     )
     add_form = UserCreationForm
     inlines = (ProfileInline,)
 
-
-
-
-admin.site.register(User, UserAdmin)
-admin.site.register(Profile)
-
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    pass
