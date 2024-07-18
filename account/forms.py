@@ -1,7 +1,7 @@
 from .models import User
 from django import forms
 
-#USERを作成するForm
+#AdminでUSERを作成するForm
 class UserCreationForm(forms.ModelForm):
     class Meta:
         model = User

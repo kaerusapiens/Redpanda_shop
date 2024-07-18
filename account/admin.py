@@ -7,6 +7,7 @@ class ProfileInline(admin.StackedInline):
     model = Profile
     can_delete = False
 
+#USER ADMIN作成
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
     fieldsets = (
@@ -28,6 +29,7 @@ class CustomUserAdmin(UserAdmin):
     add_form = UserCreationForm
     inlines = (ProfileInline,)
 
+#USER ADMINに紐づくProfileブロック作成
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
     pass

@@ -2,8 +2,12 @@ from django.views.generic import View, ListView
 from store.models import Product
 from collections import OrderedDict
 from django.shortcuts import redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
-class AddToCartView(View): #post methodを使用できるようになる
+
+#カート追加(POST.get)
+class AddToCartView(LoginRequiredMixin, View): 
     def post(self,request):
         item_pk = request.POST.get('item_pk')
         quantity = request.POST.get('quantity')
@@ -18,7 +22,8 @@ class AddToCartView(View): #post methodを使用できるようになる
         request.session['cart'] = cart
         return redirect('/cart/')
 
-class CartListView(ListView):
+#カートリストを表示する。
+class CartListView(LoginRequiredMixin, ListView):
     model = Product
     template_name = 'cart_view.html'
     def get_queryset(self):
@@ -45,7 +50,8 @@ class CartListView(ListView):
             print(e)
         return context
 
-     
+#SESSION　Dataにアイテムがなければカートから削除
+@login_required #LoginRequiredMixin のDecorator
 def remove_from_cart(request,pk):
     cart = request.session.get('cart',None)
     if cart is not None:
