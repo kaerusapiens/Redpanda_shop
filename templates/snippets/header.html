@@ -57,18 +57,14 @@
         &nbsp;
         &nbsp;
         &nbsp;
-        &nbsp;
         <li class="nav-item">
-          <form action="{% url 'login' %}" method="post">
+          <form action="/login/" method="post">
             {% csrf_token %}
             <button type="submit" class="btn btn-light">
               <i class="fa fa-lock" aria-hidden="true"></i> Login
             </button>
           </form>
         </li>
-        &nbsp;
-        &nbsp;
-        &nbsp;
         {% endif %}
 
       </ul>

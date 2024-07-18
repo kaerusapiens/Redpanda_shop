@@ -110,6 +110,8 @@ python manage.py migrate
 
 ## ERROR LOG
 
+* basic errors - URL route path error, models related, template error
+
 * LogoutView class RETURN 405 Method Not Allowed -> POSTで解決
 https://docs.djangoproject.com/en/5.0/releases/4.1/#log-out-via-get
 https://qiita.com/guabanapple/items/c8062a138acbbb5896de
