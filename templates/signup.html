@@ -5,6 +5,7 @@
     <div class="row ">
         <div class="col-12">
             <h1>
+                <!-- request.pathにloginが含まれているかどうか-->
                 {% if 'login' in request.path %}
                 Login
                 {% elif 'signup' in request.path %}
@@ -15,7 +16,7 @@
                 {% csrf_token %}
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <input type="text" class="form-control" name="username" placeholder="Username">
+                        <input type="text" class="form-control" name="userid" placeholder="Userid">
                     </div>
                 </div>
                 <div class="form-row">

@@ -108,9 +108,25 @@ python manage.py migrate
 `python manage.py startapp cart`
 
 
+## ERROR LOG
+
+* LogoutView class RETURN 405 Method Not Allowed -> POSTで解決
+https://docs.djangoproject.com/en/5.0/releases/4.1/#log-out-via-get
+https://qiita.com/guabanapple/items/c8062a138acbbb5896de
+
+* Login Form -> 解決中
 
 
 ### OTHER OPTIONS
 * Cart：AJAX
 * 会員登録のメール承認機能：SMTP(gmail)
 * 決済：stripe
+
+
+## CSS
+    <!--FONT-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap">
+    <!-- Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <!--ICON-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">

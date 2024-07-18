@@ -8,10 +8,9 @@ from django.contrib.auth import get_user_model
 
 #会員登録View
 class SignUpView(CreateView):
-    from_class = UserCreationForm
-    success_url = '/login/'
+    form_class = UserCreationForm
     template_name = 'signup.html'
-
+    success_url = '/login/'
     def form_valid(self, form):
         return super().form_valid(form)
 
@@ -28,7 +27,7 @@ class Login(LoginView):
 class AccountUpdateView(LoginRequiredMixin, UpdateView):
     model = get_user_model()
     template_name = 'account.html'
-    fields = ('username', 'email',)
+    fields = ('userid', 'email','password')
     success_url = '/account/'
 
     def get_object(self):
@@ -38,9 +37,9 @@ class AccountUpdateView(LoginRequiredMixin, UpdateView):
 #Profileアップデート
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     model = Profile
-    template_name = 'profile.html'
+    template_name = 'account.html'
     fields = ('user_name', 'address')
-    success_url = '/profile/' #これだけでは一般ユーザーもリンクを押せばupdateされてしまうようになる
+    success_url = '/account/' #これだけでは一般ユーザーもリンクを押せばupdateされてしまうようになる
 
     def get_object(self):
         self.kwargs['pk'] = self.request.user
