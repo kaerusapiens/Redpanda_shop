@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'store', #追記
     'cart', #追記
     'account', #追記'
+    'debug_toolbar', #追記
 ]
 
 MIDDLEWARE = [
@@ -55,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware', #追記
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -78,6 +80,63 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
+#
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "file": {
+            "level": "DEBUG",
+            "class": "logging.FileHandler",
+            "filename": BASE_DIR / "log/debug.log",
+        },
+            'console': {
+            'level': 'INFO',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+        },
+        'django.server': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'django.server',
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        }
+    },
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    'formatters': {
+        'django.server': {
+            '()': 'django.utils.log.ServerFormatter',
+            'format': '[%(server_time)s] %(message)s a',
+        }
+    },
+        'loggers': {
+        'django': {
+            'handlers': ['console', 'mail_admins'],
+            'level': 'INFO',
+        },
+        'django.server': {
+            'handlers': ['django.server'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    },
+    'account': {
+        'handlers': ['console'],
+        'level': 'DEBUG',
+    }
+    
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -131,6 +190,7 @@ MEDIA_URL = '/media/'  #追記add for image static file DIR
 MEDIA_ROOT = BASE_DIR / 'static/media'  #追記add for image static file DIR
 
 
+INTERNAL_IPS = ['127.0.0.1',] #追記
 
 
 # Default primary key field type

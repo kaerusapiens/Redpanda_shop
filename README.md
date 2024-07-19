@@ -120,10 +120,11 @@ https://qiita.com/guabanapple/items/c8062a138acbbb5896de
 
 
 ### OTHER OPTIONS
-* Cart：AJAX
+* Page load AJAX
 * 会員登録のメール承認機能：SMTP(gmail)
 * 決済：stripe
-
+* Login : Firebase
+* Chat
 
 ## CSS
     <!--FONT-->

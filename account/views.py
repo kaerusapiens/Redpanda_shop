@@ -5,15 +5,22 @@ from .models import Profile
 from .forms import UserCreationForm
 from django.contrib.auth import get_user_model
 from django.contrib import messages
-
+from django.urls import reverse_lazy
+from django.contrib.auth import login, authenticate
 
 #会員登録View
 class SignUpView(CreateView):
     form_class = UserCreationForm
     template_name = 'signup.html'
-    success_url = '/login/'
+    success_url = reverse_lazy("index") # ユーザー作成後のリダイレクト先ページ
+
     def form_valid(self, form):
-        return super().form_valid(form)
+        response = super().form_valid(form)
+        account_id = form.cleaned_data.get("userid")
+        password = form.cleaned_data.get("password")
+        user = authenticate(account_id=account_id, password=password)
+        login(self.request, user)
+        return response
 
 #ログインView
 class Login(LoginView):
