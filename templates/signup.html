@@ -12,21 +12,11 @@
                 Signup
                 {% endif %}
             </h1>
-            <form method="POST" action="{% if form_type == 'login' %}{% url 'login' %}{% elif form_type == 'signup' %}{% url 'signup' %}{% endif %}">
+            <form method="POST">
                 {% csrf_token %}
-                {{ form.non_field_errors }}
-                {% for field in form %}
-                {{ field.label }}
-                {{ field }}
-                {{ field.errors }}
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <input type="text" class="form-control" name="userid" placeholder="Userid">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <input type="email" class="form-control" name="email" placeholder="Email" required>
+                        <input type="text" class="form-control" name="username" placeholder="Username">
                     </div>
                 </div>
                 <div class="form-row">
