@@ -3,7 +3,9 @@ from django.utils import timezone
 from datetime import timedelta
 from django.urls import reverse
 from django.utils.text import slugify
-
+from PIL import Image
+from io import BytesIO
+from django.core.files import File
 
 class Category(models.Model):
     id = models.AutoField(primary_key=True,editable=False)
@@ -65,5 +67,17 @@ class Product(models.Model):
 
     def __str__(self):
         return self.product_name
+
+   # before saving the instance we’re reducing the image
+    def save(self, *args, **kwargs):
+        new_image = self.reduce_image_size(self.product_image)
+        self.product_image = new_image
+        super().save(*args, **kwargs)
+    def reduce_image_size(self, product_image):
+        img = Image.open(product_image)
+        thumb_io = BytesIO()
+        img.save(thumb_io, 'jpeg', quality=50) #on a scale of 0 to 100
+        new_image = File(thumb_io, name=product_image.name)
+        return new_image
     
 
