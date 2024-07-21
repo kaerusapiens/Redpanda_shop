@@ -22,8 +22,6 @@ urlpatterns = [
     path('reset_password_complete/', PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 
 
-
-
     # Cart
     path("cart/",views.CartListView.as_view(),name="cart-view"),
     path("cart/add/",views.AddToCartView.as_view(),name="cart-add"),
