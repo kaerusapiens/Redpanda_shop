@@ -1,14 +1,21 @@
 # Redpanda_shop Specification
 
 ## 実現したいこと
-1. AdminでUSER, 商品, カテゴリーのCRUDができるようにデータモデルを作る
-    * カテゴリー　→　カテゴリーVIEW
-    * USER  →　Profile(USERに紐づく配送先住所、お名前)
-    * 商品 →　在庫：当日出荷表示 / 直送：本日から七日後出荷表示
-2. Cart In機能(SESSION)
-3. 会員登録機能
-4. ログイン・ログアウト(SESSION)
-5. CHECK OUT(着払いでOK)
+1. モデル作成
+* Category Model
+    - Category hierarchy level1>level2
+    - カテゴリーVIEW
+* User Model
+    - USER  →　Profile(USERに紐づく配送先住所、お名前)
+* Product model 
+    - 商品 →　在庫：当日出荷表示 / 直送：本日から七日後出荷表示
+    - カテゴリーは
+2. AdminでUSER, 商品, カテゴリーのCRUDができるように
+3. Cart In機能(SESSION)
+4. 会員登録機能
+5. ログイン・ログアウト(SESSION)
+6. CHECK OUT(着払いでOK)
+7. 検索(AJAX, Jquery)
 
 
 ## WORK STEP
@@ -17,19 +24,6 @@
 3. TEMPLATE作成
 4. URLS作成(route path)
 
-
-## Direcotory structure
-
-```tree
-rendpanda_shop
-├── config --> settings.py, urls.py, wsgi.py, asgi.py
-├── static --> media
-├── secrets --> yaml
-├── templates --> htmls
-├── cart --> cart app
-├── account --> user model
-└── store --> product model, category model
-```
 
 ## Database
 Using sqlite3
@@ -71,21 +65,6 @@ Using sqlite3
 | expire_date | DATETIME | NOT NULL |
 
 >session_data : serialized the cart item information
-
-
-
-## Image handling for products
-
-* install image handler
-  
-   `pip install pillow`
-* create directory
-```tree
-├──config -->main configs
-├──store
-└── static
-    └──media :product images uploaded #127.0.0.1:8000/media/images/BulletGuard-iPhone.jpg
-```
 
 
 ## Active virtual env & run server
@@ -135,12 +114,3 @@ class AuthenticationForm(forms.Form):
     password = forms.CharField(label=_("Password"), widget=forms.PasswordInput)
 
 ```
-
-
-## CSS
-    <!--FONT-->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap">
-    <!-- Bootstrap-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <!--ICON-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">

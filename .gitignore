@@ -1,5 +1,8 @@
 secrets/
-static/
+static/media
 */__pycache__/
 db.sqlite3
 sqlite3.exe
+node_modules/
+package-lock.json
+package.json

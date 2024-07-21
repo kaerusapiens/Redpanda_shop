@@ -1,6 +1,23 @@
+<style>
+
+.dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu .dropdown-menu {
+  top: 0;
+  left: 100%;
+  border-radius: 0.25rem;
+}
+
+.dropdown-submenu:hover > .dropdown-menu {
+  display: block;
+}
+
+</style>
 <div class="p-3 mb-2 bg-dark text-white">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand"> Save Redpanda Shop </a>
+    <a class="navbar-brand"> Redpanda Shop </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -15,20 +32,36 @@
         &nbsp;
         <li class="nav-item dropdown">
           <a class="btn btn-light dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-             Category</i>
-          </a>
+            Category</a>
           <ul class="dropdown-menu">
             {% for category in categories %}
-              <li><a class="dropdown-item" href="{{ category.get_absolute_url }}">{{ category.name | capfirst }}</a></li> <!--capitalize the word-->
+              <li class="dropdown-submenu">
+                <a class="dropdown-item dropdown-toggle" href="{{ category.get_absolute_url }}">{{ category.name | capfirst }}</a>
+                {% if category.subcategories.all %}
+                  <ul class="dropdown-menu">
+                    {% for subcategory in category.subcategories.all %}
+                      <li><a class="dropdown-item" href="{{ subcategory.get_absolute_url }}">{{ subcategory.name | capfirst }}</a></li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+              </li>
             {% endfor %}
           </ul>
         </li>
+        
         &nbsp;
         &nbsp;
         &nbsp;
         <li class="nav-item">
           <a role="button" type="button" class='btn btn-light' href="{% url "cart-view"%}">
             <i class="fa fa-shopping-cart" aria-hidden="true"> Cart</a></i>
+          </li>
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        <li class="nav-item">
+          <a role="button" type="button" class='btn btn-light' href="">
+            <i class="fa fa-archive" aria-hidden="true"> Purchase Order</a></i>
           </li>
         &nbsp;
         &nbsp;
@@ -70,4 +103,15 @@
       </ul>
     </div>
   </nav>
+
+<!-- Search Bar -->
+  <div class="bg-dark p-3">
+    <form class="form-inline d-flex align-items-center" action="search/"  id="search-form">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search Products" aria-label="Search" name="q" style="width: 300px;" id="search-input">
+      &nbsp;
+      &nbsp;
+      <button class="btn btn-primary my-2 my-sm-0" type="submit" >Search</button>
+    </form>
   </div>
+  </div>
+

@@ -1,0 +1,23 @@
+{% extends "./base.html" %}
+{% block main %}
+
+    <h1>Search Results for "{{ query }}"</h1>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3" style="width: 80rem;">
+    {% for product in results %}
+    <div class="col">
+        <div class="card h-100">
+            <img src="{{ product.product_image.url }}" class="card-img-top product-image" alt="product-image">
+            <div class="card-body">
+                <h5 class="title">{{ product.product_name }}</h5>
+                <p class="des">{{ product.product_description|truncatechars:50 }}</p>
+                <p class="price">¥ {{ product.product_price }}(税込)</p>
+                <p class="est_ship_date">{{ product.get_est_ship_date }} 出荷予定</p>
+                <a href="{{ product.get_absolute_url }}" class="btn btn-primary">詳細</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <li>No products found.</li>
+    {% endfor %}
+</div>
+{% endblock %}
