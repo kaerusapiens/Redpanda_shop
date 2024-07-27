@@ -30,33 +30,29 @@ LOGGING = {
         'simple': {
             'format': '{levelname} {message}',
             'style': '{',
-        },
+        }},
     'handlers': {
         'file': {
-            'level': 'WARNING',
+            'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'filename': BASE_DIR / 'django_debug.log',
-            'formatter': 'verbose'
-        },
-            'console': {
-            'level': 'WARNING',
-            'class': 'logging.StreamHandler',
-            'formatter': 'simple',
+            'formatter': 'verbose',
+            'mode': 'w',  # 'w' to overwrite the file
         },
     },
     'loggers': {
         'django': {
-            'handlers': ['file', 'console'], 
-            'level': 'WARNING',
+            'handlers': ['file'],
+            'level': 'DEBUG',
             'propagate': True,
         },
-        'app': { #myapp
-            'handlers': ['file', 'console'],
-            'level': 'WARNING',
+        'project': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
             'propagate': True,
         },
     },
-}}
+}
 
 # Application definition
 INSTALLED_APPS = [
@@ -149,10 +145,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = '/static/'  #追記URL absolute / URL relative
-
-STATICFILE_DIRS=[BASE_DIR, 'static']  #追記add for image static file DIR
+STATICFILES_DIRS=[BASE_DIR/ 'static']  #追記add for image static file DIR
+STATIC_ROOT = BASE_DIR / "staticfiles"
 MEDIA_URL = '/media/'  #追記add for image static file DIR
-MEDIA_ROOT = BASE_DIR / 'static/media'  #追記add for image static file DIR
+MEDIA_ROOT = BASE_DIR / 'media'  #追記add for image static file DIR
+
 
 
 INTERNAL_IPS = ['127.0.0.1',] #追記

@@ -4,7 +4,10 @@ from collections import OrderedDict
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-
+from django.http import JsonResponse
+import json
+import logging
+logger = logging.getLogger('project')
 
 #カート追加(POST.get)
 class AddToCartView(LoginRequiredMixin, View): 
@@ -21,6 +24,7 @@ class AddToCartView(LoginRequiredMixin, View):
             cart['items'][item_pk] = int(quantity)
         request.session['cart'] = cart
         return redirect('/cart/')
+
 
 #カートリストを表示する。
 class CartListView(LoginRequiredMixin, ListView):
@@ -58,3 +62,33 @@ def remove_from_cart(request,pk):
         del cart['items'][pk]
         request.session['cart'] = cart
     return redirect('/')
+
+
+
+class UpdateCartView(View):
+    def post(self, request,pk):
+        try:
+            data = json.loads(request.body)
+            quantity = data.get('quantity')
+            cart = request.session.get('cart', None)
+            logger.debug(f"Debug: Received cart: {cart}")
+            logger.debug(f"Debug: Received cart: ",cart['items'] )
+            if cart is not None and str(pk) in cart['items']:
+                cart['items'][pk] = int(quantity)
+                # Update the session
+                request.session['cart'] = cart
+
+                # Recalculate totals
+                total = 0
+                for item_pk, quantity in cart['items'].items():
+                    product = Product.objects.get(pk=item_pk)
+                    subtotal = int(product.product_price) * quantity
+                    total += subtotal
+
+                cart['total'] = total
+                request.session['cart'] = cart
+            else:
+                return JsonResponse({'success': False, 'error': 'Item not in cart or cart is empty.'})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+

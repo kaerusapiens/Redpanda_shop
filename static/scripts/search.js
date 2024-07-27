@@ -1,23 +1,29 @@
-document.addEventListener('DOMContentLoaded', function () {
-    var searchForm = document.getElementById('search-form');
-    var searchInput = document.getElementById('search-input');
+//Product Search
+document.addEventListener('DOMContentLoaded', () => {
+    const searchForm = document.getElementById('search-form');
+    const searchInput = document.getElementById('search-input');
     if (searchForm && searchInput) {
-        searchForm.addEventListener('submit', function (event) {
+        searchForm.addEventListener('submit', (event) => {
             event.preventDefault();
-            var query = searchInput.value.trim();
+            const query = searchInput.value.trim();
             if (query) {
-                $.ajax({
-                    url: "/search/?q=".concat(encodeURIComponent(query)),
+                fetch(`/search/?q=${encodeURIComponent(query)}`, {
                     method: 'GET',
-                    dataType: 'json',
-                    success: function (results) {
-                        // Handle successful response
-                        console.log(results); // For demonstration purposes
-                    },
-                    error: function (xhr, status, error) {
-                        // Handle errors
-                        console.error('Error fetching search results:', status, error);
+                    headers: {
+                        'Accept': 'application/json'
                     }
+                })
+                    .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                    .then(results => {
+                    console.log(results); // For demonstration purposes
+                })
+                    .catch(error => {
+                    console.error('Error fetching search results:', error);
                 });
             }
         });
