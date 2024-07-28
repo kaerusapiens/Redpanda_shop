@@ -17,6 +17,7 @@
 5. ログイン・ログアウト
 6. CHECK OUT(着払いでOK)
 7. 検索
+8. Chat機能
 
 
 ## WHY
@@ -26,6 +27,14 @@
 2. Page Load
 * Ajax vs. Full page load
     - Cart 数量変更、商品ページView
+
+## OTHER Wishlist
+1. Breadcrumbs
+2. SMTP
+3. PW validation
+4. Pay - stripe
+5. Login - Firebase
+
 
 ## クラス図　- Product
 ```mermaid

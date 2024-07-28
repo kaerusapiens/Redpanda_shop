@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block main %}
+<div class="container my-5">
+    <h2>Order Confirmation</h2>
+    <p>Thank you for your order! Your order has been placed successfully.</p>
+    <a href="{% url 'index' %}" class="btn btn-primary">Return to Home</a>
+</div>
+{% endblock %}
