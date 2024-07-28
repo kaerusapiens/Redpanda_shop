@@ -6,10 +6,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 import json
+
+#Debugのため追記
 import logging
 logger = logging.getLogger('project')
 
-#カート追加(POST.get)
+#カート追加
 class AddToCartView(LoginRequiredMixin, View): 
     def post(self,request):
         item_pk = request.POST.get('item_pk')
@@ -26,7 +28,7 @@ class AddToCartView(LoginRequiredMixin, View):
         return redirect('/cart/')
 
 
-#カートリストを表示する。
+#カートでリストを表示する。
 class CartListView(LoginRequiredMixin, ListView):
     model = Product
     template_name = 'cart_view.html'
@@ -54,7 +56,7 @@ class CartListView(LoginRequiredMixin, ListView):
             print(e)
         return context
 
-#SESSION　Dataにアイテムがなければカートから削除
+#カートから削除
 @login_required #LoginRequiredMixin のDecorator
 def remove_from_cart(request,pk):
     cart = request.session.get('cart',None)
@@ -63,8 +65,7 @@ def remove_from_cart(request,pk):
         request.session['cart'] = cart
     return redirect('/')
 
-
-
+#カートで数量を更新
 class UpdateCartView(View):
     def post(self, request,pk):
         try:
@@ -84,11 +85,10 @@ class UpdateCartView(View):
                     product = Product.objects.get(pk=item_pk)
                     subtotal = int(product.product_price) * quantity
                     total += subtotal
-
                 cart['total'] = total
                 request.session['cart'] = cart
+                return JsonResponse({'success': True, 'subtotal': subtotal, 'total': total})
             else:
                 return JsonResponse({'success': False, 'error': 'Item not in cart or cart is empty.'})
         except Exception as e:
             return JsonResponse({'success': False, 'error': str(e)})
-

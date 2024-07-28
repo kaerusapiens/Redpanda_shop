@@ -1,8 +1,6 @@
 
 document.addEventListener('DOMContentLoaded', function() {
-  console.log('cart_update.js loaded'); // Confirm that the script is loaded
   const updateButtons = document.querySelectorAll('.cart-update-btn');
-
   updateButtons.forEach(button => {
       button.addEventListener('click', function() {
             const pk = this.getAttribute('data-pk');

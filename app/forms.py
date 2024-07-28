@@ -9,12 +9,11 @@ class UserCreationForm(forms.ModelForm):
 
     # password validation 
     def clean_password(self):
-        password = self.cleaned_data['password'] #まだ入れてない
+        password = self.cleaned_data['password']
         return password
-    
-    
+     
     def save(self, commit=True):
-        user = super().save(commit=False) # DBにまだいれない/  commit parameter controls whether the user instance is saved to the database immediately
+        user = super().save(commit=False) 
         user.set_password(self.cleaned_data['password'])
         if commit: 
             user.save()

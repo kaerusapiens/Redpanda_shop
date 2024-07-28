@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block main %}
 
 <div class="container ">
@@ -24,34 +23,44 @@
                 <tbody>
                     {% for object in object_list %}
                     <tr>
+                        <!-- INDEX-->
                         <td>No.{{forloop.counter}}</td>
+                        <!-- SKU NUMBER-->
                         <td>{{object.pk}}</td>
+                        <!-- イメージ-->
                         <td><img style="width: 5rem;" src="{{ object.product_image.url }}" class="card-img-top product-image" alt="product-image"></td>
+                        <!-- 商品名-->
                         <td>{{object.product_name}}</td>
+                        <!-- 価格-->
                         <td>{{object.product_price}}</td>
+                        <!-- 数量-->
                         <td>
                             <input type="number" name="quantity" value="{{object.quantity}}" min="1" style="width: 4rem;" class="text-right quantity-input" data-pk="{{object.pk}}">
                             <button type="button" class="btn btn-primary btn-sm cart-update-btn" data-pk="{{object.pk}}">更新</button>
                         </td>
+                        <!-- subtotal-->
                         <td id="subtotal-{{object.pk}}">¥　{{object.subtotal}}</td>
-                        <td><a href="/cart/remove/{{object.pk}}/" class="my-auto btn btn-danger btn-sm">削除</a></td>
+                        <!-- 削除ボタン-->
+                        <td>
+                            <a href="/cart/remove/{{object.pk}}/" class="my-auto btn btn-danger btn-sm">削除
+                        </a></td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
+            <!-- 合計-->
             <p class="lead text-right" id="total">合計 - ¥{{total}}</p>
 
             <!-- Checkoutボタン -->
             <form action="/checkout/" method="POST" class="text-right">
-            {% csrf_token %}
+                {% csrf_token %}
                 <button type="submit" class="btn btn-primary">Checkout</button>
             </form>
             {% else %}
-            <p class="">ショッピングカートにアイテムがありません。</p>
+            <p class="ショッピングカートにアイテムがありません。"></p>
             {% endif %}
         </div>
     </div>
 </div>
-
 <script src="{% static 'scripts/cart_update.js' %}" defer></script>
 {% endblock %}
