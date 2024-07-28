@@ -12,50 +12,101 @@
     - カテゴリー登録は末端レベルで登録できるように
     - Imageはスケイル50で圧縮してアップロードされるように
 2. AdminでUSER, 商品, カテゴリーのCRUDができるように
-3. Cart In機能(SESSION)
+3. Cart In機能
 4. 会員登録機能
-5. ログイン・ログアウト(SESSION)
+5. ログイン・ログアウト
 6. CHECK OUT(着払いでOK)
-7. 検索(AJAX, Jquery)
+7. 検索
 
 
-## WORK STEP
-1. Admin作成 
-2. Models作成 (USER, 商品, カテゴリー)とデータマイグレーション
-3. TEMPLATE作成
-4. URLS作成(route path)
+## WHY
+1. Authenication
+* Session vs. Token(JWT)
 
+2. Page Load
+* Ajax vs. Full page load
+    - Cart 数量変更、商品ページView
 
-## Database
-Using sqlite3
+## クラス図　- Product
+```mermaid
+classDiagram
+    class Category {
+        +AutoField id
+        +CharField name
+        +SlugField slug
+        +ForeignKey parent
+        +get_absolute_url() str
+        +save(*args, **kwargs) void
+        +get_descendants(include_self: bool) list
+    }
 
-### Tablelist
-1.  django_session
-2.  store_category
-3.  store_product
+    class ShippingChoices {
+        <<enumeration>>
+        +In_Stock
+        +Drop_Ship
+    }
 
+    class Product {
+        +AutoField id
+        +ForeignKey category
+        +CharField product_name
+        +SlugField slug
+        +DecimalField product_price
+        +TextField product_description
+        +ImageField product_image
+        +BooleanField can_return
+        +CharField est_ship_date
+        +get_absolute_url() str
+        +get_est_ship_date() datetime.date
+        +save(*args, **kwargs) void
+        +reduce_image_size(product_image) File
+    }
 
-### store_category schema
+    Category "1" -- "0..*" Category : parent
+    Category "1" -- "0..*" Product : products
+    Product --> ShippingChoices : est_ship_date
+```
+## クラス図　- User
+```mermaid
+classDiagram
+    class UserManager {
+        +create_user(userid: str, email: str, password: str) User
+        +create_superuser(userid: str, email: str, password: str) User
+    }
 
-| Column Name | Data Type | Constraints |
-|---|---|---|
-| id | INTEGER | PRIMARY KEY, AUTOINCREMENT |
-| category_name | VARCHAR(100) | NOT NULL |
-| slug | VARCHAR(100) | NOT NULL, UNIQUE |
+    class User {
+        +BigAutoField id
+        +CharField userid
+        +EmailField email
+        +BooleanField is_admin
+        +UserManager objects
+        +USERNAME_FIELD
+        +EMAIL_FIELD
+        +REQUIRED_FIELDS
+        +__str__() str
+        +has_perm(perm: str, obj: Any) bool
+        +has_module_perms(app_label: str) bool
+        +is_staff: bool
+    }
 
-### store_product schema
+    class Profile {
+        +OneToOneField user
+        +CharField user_name
+        +CharField address
+        +DateTimeField created_at
+        +DateTimeField updated_at
+        +__str__() str
+    }
 
-| Column Name | Data Type | Constraints |
-|---|---|---|
-| id | INTEGER | PRIMARY KEY, AUTOINCREMENT |
-| product_name | VARCHAR(100) | NOT NULL |
-| slug | VARCHAR(100) | NOT NULL, UNIQUE |
-| product_price | DECIMAL | NOT NULL |
-| product_description | TEXT | NOT NULL |
-| product_image | VARCHAR(100) | NOT NULL |
-| can_return | BOOLEAN | NOT NULL |
-| est_ship_date | VARCHAR(10) | NOT NULL |
-| category_id | BIGINT | NOT NULL, FOREIGN KEY REFERENCES store_category(id) |
+    class PostSave {
+        +create_user_profile(sender, **kwargs)
+    }
+
+    User "1" -- "1" Profile : user
+    UserManager --> User : manages
+    Profile --> User : user
+    PostSave --|> User : sender
+```
 
 ## django_session schema
 
@@ -91,11 +142,17 @@ python manage.py migrate
 * basic errors - URL route path error, models related, template error
 
 * LogoutView class RETURN 405 Method Not Allowed -> POSTで解決
+
 https://docs.djangoproject.com/en/5.0/releases/4.1/#log-out-via-get
+
 https://qiita.com/guabanapple/items/c8062a138acbbb5896de
 
-* Login Form passing error-> The default LoginView class in Django inherits from AuthenticationForm and accepts username and password as default fields.
-This version makes it clear that LoginView inherits from AuthenticationForm and specifies that it accepts username and password fields by default.
+* Login Form passing error
+
+>The default LoginView class in Django inherits from AuthenticationForm and accepts username and password as default fields.
+>This version makes it clear that LoginView inherits from AuthenticationForm and specifies that it accepts username and password fields by default.
+
+ということで、loginにemailがあったのでできなかった
 ```
 class LoginView(RedirectURLMixin, FormView):
 
